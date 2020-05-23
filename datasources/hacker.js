@@ -11,6 +11,7 @@ class HackerAPI extends RESTDataSource {
     const postResponse = await this.get(`item/${id}.json?print=pretty`);
     return {
       title: postResponse.title,
+      id: postResponse.id,
       user: postResponse.by,
       url: postResponse.url,
     };
