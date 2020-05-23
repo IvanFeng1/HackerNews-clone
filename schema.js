@@ -2,7 +2,13 @@ const { gql } = require("apollo-server");
 
 const typeDefs = gql`
   type Query {
-    posts: [Post]
+    posts(pageSize: Int, after: Int): PostConnection!
+  }
+
+  type PostConnection {
+    cursor: Int! # time the post was uploaded
+    hasMore: Boolean!
+    posts: [Post]!
   }
 
   type Post {
@@ -10,6 +16,7 @@ const typeDefs = gql`
     id: Int!
     user: String!
     url: String
+    cursor: Int
   }
 
   # type Comment {

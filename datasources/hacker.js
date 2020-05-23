@@ -14,6 +14,7 @@ class HackerAPI extends RESTDataSource {
       id: postResponse.id,
       user: postResponse.by,
       url: postResponse.url,
+      cursor: postResponse.time,
     };
   }
 
@@ -21,7 +22,7 @@ class HackerAPI extends RESTDataSource {
     const response = await this.get("topstories.json?print=pretty"); // getting the list of IDs that correspond to the top stories on hackernews at the time
     var postArray = [];
     // if (Array.isArray(response)) {
-    for (var i = 0; i < 15; i++) {
+    for (var i = 0; i < 50; i++) {
       var post = await this.postConverter(response[i]);
       postArray.push(post);
     }
