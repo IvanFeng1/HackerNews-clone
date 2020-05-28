@@ -32,9 +32,12 @@ function Homepage() {
   // loading is true only on the first request on default behavior.
   // fetchMore doesn't affect "loading" by default.
   const { loading, error, data, fetchMore, networkStatus } = useQuery(
-    get_top_posts
+    get_top_posts,
+    {
+      notifyOnNetworkStatusChange: true,
+    }
   );
-  if (loading) return <p>loading</p>;
+  if (loading && networkStatus != 3) return <p>loading</p>;
   if (error) return <p>ERROR</p>;
   if (!data) return <p>Not found</p>;
   console.log(networkStatus);
