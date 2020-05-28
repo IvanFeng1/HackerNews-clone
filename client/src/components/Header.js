@@ -6,10 +6,10 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles({
   header: {
     padding: "2em",
-    borderBottom: "1px solid",
+    borderBottom: "1px solid #3BBA9C",
   },
   headerText: {
-    color: "black",
+    color: "#3BBA9C",
   },
 });
 function Header() {
