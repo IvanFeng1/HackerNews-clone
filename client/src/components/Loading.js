@@ -3,16 +3,12 @@ import FadeIn from "react-fade-in";
 import Lottie from "react-lottie";
 import { Helmet } from "react-helmet"; // need this for set the background colour
 
-//material ui stuff
-import { Container, makeStyles } from "@material-ui/core";
-
 //loading animation
-import * as fishLoading from "./fish-loading.json";
-
+import * as loadingAnimation from "./loadingAnimation.json";
 const defaultOptions = {
   loop: true,
   autoplay: true,
-  animationData: fishLoading.default,
+  animationData: loadingAnimation.default,
   rendererSettings: {
     preserveAspectRatio: "xMidYMid slice",
   },
@@ -27,7 +23,7 @@ function Loading() {
   return (
     <div className="application">
       <Helmet>
-        <style>{"body { background-color: #32f09e; }"}</style>
+        <style>{"body { background-color: #2E3047; }"}</style>
       </Helmet>
       <FadeIn>
         <Lottie options={defaultOptions} width={550} length={550} />
