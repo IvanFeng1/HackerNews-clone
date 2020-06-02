@@ -3,6 +3,7 @@ const { gql } = require("apollo-server");
 const typeDefs = gql`
   type Query {
     posts(pageSize: Int, after: Int): PostConnection!
+    comments(id: Int!): [Comment]
   }
 
   type PostConnection {
@@ -17,14 +18,16 @@ const typeDefs = gql`
     user: String!
     url: String
     cursor: Int
+    comments: Int
+    upvotes: Int
   }
 
-  # type Comment {
-  #   content: String!
-  #   user: String!
-  #   id: Int!
-  #   childComments: [Comment]
-  # }
+  type Comment {
+    text: String!
+    user: String!
+    id: Int!
+    childComments: [Int]
+  }
 `;
 
 module.exports = typeDefs;

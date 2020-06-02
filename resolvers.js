@@ -22,5 +22,8 @@ module.exports = {
           : false,
       };
     },
+    comments: async (_, { id }, { dataSources }) => {
+      return dataSources.hackerAPI.getDirectComments(id);
+    },
   },
 };

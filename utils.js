@@ -1,3 +1,4 @@
+// code for paginating the results for the top posts
 module.exports.paginateResults = ({
   after: cursor,
   pageSize = 20,
