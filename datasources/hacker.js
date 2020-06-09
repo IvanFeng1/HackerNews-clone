@@ -54,7 +54,6 @@ class HackerAPI extends RESTDataSource {
     */
     const response = await this.get(`item/${id}.json`); // raw response of the post
     var childComments = response.kids; // array of IDs that correspond to the child comments of this post
-    console.log(`childComments ${childComments}`);
     var commentResponse; // raw response of comment
     var user; // user that write comment
     var text; // text content of the comment
@@ -68,6 +67,7 @@ class HackerAPI extends RESTDataSource {
           text: this.commentTextFormatter(commentResponse.text),
           user: commentResponse.by,
           id: commentResponse.id,
+          cursor: commentResponse.time,
           childComments: commentResponse.kids, // child comments that correspond to this comment
         });
       }

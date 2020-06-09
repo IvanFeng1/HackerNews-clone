@@ -3,15 +3,21 @@ const { gql } = require("apollo-server");
 const typeDefs = gql`
   type Query {
     posts(pageSize: Int, after: Int): PostConnection!
-    comments(id: Int!): [Comment]
+    comments(id: Int, pageSize: Int, after: Int): CommentConnection!
   }
-
+  # type Mutation {
+  #   comments(id: Int, pageSize: Int, after: Int): CommentConnection!
+  # }
   type PostConnection {
     cursor: Int! # time the post was uploaded
     hasMore: Boolean!
     posts: [Post]!
   }
-
+  type CommentConnection {
+    cursor: Int!
+    hasMore: Boolean!
+    comments: [Comment]!
+  }
   type Post {
     title: String!
     id: Int!
@@ -26,6 +32,7 @@ const typeDefs = gql`
     text: String!
     user: String!
     id: Int!
+    cursor: Int
     childComments: [Int]
   }
 `;

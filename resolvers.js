@@ -22,8 +22,49 @@ module.exports = {
           : false,
       };
     },
-    comments: async (_, { id }, { dataSources }) => {
-      return dataSources.hackerAPI.getDirectComments(id);
+    comments: async (_, { id, pageSize = 20, after }, { dataSources }) => {
+      const topComments = await dataSources.hackerAPI.getDirectComments(id);
+      // const topComments = await dataSources.hackerAPI.getTopStories();
+      // we want these in reverse chronological order
+      topComments.reverse();
+      const comments = paginateResults({
+        after,
+        pageSize,
+        results: topComments,
+      });
+      return {
+        comments,
+        cursor: comments.length ? comments[comments.length - 1].cursor : null,
+        // if the cursor at the end of the paginated results is the same as the
+        // last item in _all_ results, then there are no more results after this
+        hasMore: comments.length
+          ? comments[comments.length - 1].cursor !==
+            topComments[topComments.length - 1].cursor
+          : false,
+      };
     },
   },
+  // Mutation: {
+  //   comments: async (_, { id, pageSize = 20, after }, { dataSources }) => {
+  //     const topComments = await dataSources.hackerAPI.getDirectComments(id);
+  //     // const topComments = await dataSources.hackerAPI.getTopStories();
+  //     // we want these in reverse chronological order
+  //     topComments.reverse();
+  //     const comments = paginateResults({
+  //       after,
+  //       pageSize,
+  //       results: topComments,
+  //     });
+  //     return {
+  //       comments,
+  //       cursor: comments.length ? comments[comments.length - 1].cursor : null,
+  //       // if the cursor at the end of the paginated results is the same as the
+  //       // last item in _all_ results, then there are no more results after this
+  //       hasMore: comments.length
+  //         ? comments[comments.length - 1].cursor !==
+  //           topComments[topComments.length - 1].cursor
+  //         : false,
+  //     };
+  //   },
+  // },
 };
