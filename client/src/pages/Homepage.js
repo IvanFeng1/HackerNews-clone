@@ -1,16 +1,22 @@
 import React, { Fragment } from "react";
-import { Waypoint } from "react-waypoint";
+import { Waypoint } from "react-waypoint"; // need this for infinite scrolling
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
+import { Helmet } from "react-helmet"; // need this to set background color
 
 // makeStyles for styling components, CssBaseline because it makes site look nice
 // Container for maxwidth
-import { makeStyles, Button, CssBaseline, Container } from "@material-ui/core/";
+import {
+  makeStyles,
+  CssBaseline,
+  Container,
+  CircularProgress,
+} from "@material-ui/core/";
 
 // components
-import PostTile from "./PostTile.js";
-import Header from "./Header.js";
-
+import PostTile from "../components/PostTile.js";
+import Header from "../components/Header.js";
+import Loading from "../components/Loading.js";
 const get_top_posts = gql`
   query postList($after: Int) {
     posts(after: $after) {
@@ -22,12 +28,24 @@ const get_top_posts = gql`
         user
         url
         cursor
+        comments
+        upvotes
       }
     }
   }
 `;
 
+const useStyles = makeStyles({
+  smallLoaderLoop: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    margin: "3em 0em 3em 0em",
+  },
+});
+
 function Homepage() {
+  const classes = useStyles();
   // notifyOnNetworkStatusChange: To make "loading" true when "fetchMore" runs.
   // loading is true only on the first request on default behavior.
   // fetchMore doesn't affect "loading" by default.
@@ -37,15 +55,19 @@ function Homepage() {
       notifyOnNetworkStatusChange: true,
     }
   );
-  if (loading && networkStatus != 3) return <p>loading</p>;
+  if (loading && networkStatus != 3) return <Loading />;
   if (error) return <p>ERROR</p>;
   if (!data) return <p>Not found</p>;
-  console.log(networkStatus);
+
   return (
-    <Fragment>
+    <div className="application">
+      <Helmet>
+        {/* need this to set the entire background color */}
+        <style>{"body {background-color: #2E3047; "}</style>
+      </Helmet>
       <CssBaseline />
+      <Header />
       <Container maxWidth="md">
-        <Header />
         <div>
           {data.posts &&
             data.posts.posts &&
@@ -59,6 +81,8 @@ function Homepage() {
                   id={post.id}
                   user={post.user}
                   url={post.url}
+                  comments={post.comments}
+                  upvotes={post.upvotes}
                 />
                 {/* 19 should be the last element of the first page of posts*/}
                 {i % 19 === 0 && i != 0 && data.posts.hasMore && (
@@ -87,10 +111,14 @@ function Homepage() {
                 )}
               </Fragment>
             ))}
-          {/* the code from here until load more is the code for loading additional posts onto the page */}
         </div>
+
+        {/* adding loading indicator for when the next page is loading */}
+        <Container className={classes.smallLoaderLoop}>
+          {networkStatus === 3 && <CircularProgress />}
+        </Container>
       </Container>
-    </Fragment>
+    </div>
   );
 }
 
