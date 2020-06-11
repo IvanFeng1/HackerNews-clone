@@ -23,19 +23,3 @@ ReactDOM.render(
   </ApolloProvider>,
   document.getElementById("root")
 );
-
-// client
-//   .query({
-//     query: gql`
-//       query GetPosts {
-//         posts {
-//           posts {
-//             title
-//             id
-//             user
-//           }
-//         }
-//       }
-//     `,
-//   })
-//   .then((result) => console.log(result));

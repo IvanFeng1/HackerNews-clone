@@ -7,10 +7,10 @@ import Commentpage from "./pages/Commentpage.js";
 function App() {
   return (
     <Router>
-      <div>
+      <Switch>
         <Route exact path="/" component={Homepage} />
         <Route path="/items/:id" component={Commentpage} />
-      </div>
+      </Switch>
     </Router>
   );
 }

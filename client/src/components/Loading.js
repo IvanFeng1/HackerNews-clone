@@ -59,16 +59,6 @@ function Loading() {
           </Typography>
         </Box>
       </Box>
-
-      <Box display="flex" alignItems="center"></Box>
-      {/* <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        textAlign="center"
-        m={2}
-      >
-      </Box> */}
     </div>
   );
 }
