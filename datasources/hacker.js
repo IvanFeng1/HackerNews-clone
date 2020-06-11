@@ -73,7 +73,12 @@ class HackerAPI extends RESTDataSource {
       }
     }
 
-    return commentArray;
+    return {
+      title: response.title,
+      score: response.score,
+      by: response.by,
+      comments: commentArray,
+    };
   }
 }
 

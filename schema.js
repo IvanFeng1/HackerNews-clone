@@ -5,15 +5,15 @@ const typeDefs = gql`
     posts(pageSize: Int, after: Int): PostConnection!
     comments(id: Int, pageSize: Int, after: Int): CommentConnection!
   }
-  # type Mutation {
-  #   comments(id: Int, pageSize: Int, after: Int): CommentConnection!
-  # }
   type PostConnection {
     cursor: Int! # time the post was uploaded
     hasMore: Boolean!
     posts: [Post]!
   }
   type CommentConnection {
+    title: String!
+    score: Int!
+    by: String!
     cursor: Int!
     hasMore: Boolean!
     comments: [Comment]!
