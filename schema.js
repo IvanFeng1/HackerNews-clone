@@ -14,6 +14,7 @@ const typeDefs = gql`
     title: String!
     score: Int!
     by: String!
+    url: String
     cursor: Int!
     hasMore: Boolean!
     comments: [Comment]!
@@ -23,16 +24,18 @@ const typeDefs = gql`
     id: Int!
     user: String!
     url: String
-    cursor: Int
+    score: Int!
     comments: Int
-    upvotes: Int
+    time: Int!
+    cursor: Int
   }
 
   type Comment {
     text: String!
     user: String!
     id: Int!
-    cursor: Int
+    cursor: Int!
+    time: Int!
     childComments: [Int]
   }
 `;

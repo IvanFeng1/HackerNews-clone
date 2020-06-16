@@ -5,7 +5,6 @@ module.exports = {
     posts: async (_, { pageSize = 20, after }, { dataSources }) => {
       const topPosts = await dataSources.hackerAPI.getTopStories();
       // we want these in reverse chronological order
-      topPosts.reverse();
       const posts = paginateResults({
         after,
         pageSize,
@@ -27,10 +26,10 @@ module.exports = {
       const title = response.title;
       const score = response.score;
       const by = response.by;
+      const url = response.url;
       const topComments = response.comments;
       // const topComments = await dataSources.hackerAPI.getTopStories();
       // we want these in reverse chronological order
-      topComments.reverse();
       const comments = paginateResults({
         after,
         pageSize,
@@ -40,6 +39,7 @@ module.exports = {
         title,
         score,
         by,
+        url,
         comments,
         cursor: comments.length ? comments[comments.length - 1].cursor : null,
         // if the cursor at the end of the paginated results is the same as the

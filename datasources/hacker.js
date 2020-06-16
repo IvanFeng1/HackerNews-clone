@@ -15,9 +15,9 @@ class HackerAPI extends RESTDataSource {
       id: postResponse.id,
       user: postResponse.by,
       url: postResponse.url,
-      cursor: postResponse.time,
+      score: postResponse.score,
       comments: postResponse.descendants,
-      upvotes: postResponse.score,
+      time: postResponse.time,
     };
   }
 
@@ -28,8 +28,9 @@ class HackerAPI extends RESTDataSource {
     of 50 Post objects */
     const response = await this.get("topstories.json?print=pretty"); // getting the list of IDs that correspond to the top stories on hackernews at the time
     var postArray = [];
-    for (var i = 0; i < 50; i++) {
+    for (var i = 0; i < 100; i++) {
       var post = await this.postConverter(response[i]);
+      post.cursor = i;
       postArray.push(post);
     }
     return postArray;
@@ -67,7 +68,8 @@ class HackerAPI extends RESTDataSource {
           text: this.commentTextFormatter(commentResponse.text),
           user: commentResponse.by,
           id: commentResponse.id,
-          cursor: commentResponse.time,
+          cursor: i,
+          time: commentResponse.time,
           childComments: commentResponse.kids, // child comments that correspond to this comment
         });
       }
@@ -77,6 +79,7 @@ class HackerAPI extends RESTDataSource {
       title: response.title,
       score: response.score,
       by: response.by,
+      url: response.url,
       comments: commentArray,
     };
   }
