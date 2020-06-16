@@ -27,9 +27,10 @@ const get_top_posts = gql`
         id
         user
         url
-        cursor
+        score
         comments
-        upvotes
+        time
+        cursor
       }
     }
   }
@@ -68,50 +69,49 @@ function Homepage() {
       <CssBaseline />
       <Header />
       <Container maxWidth="md">
-        <div>
-          {data.posts &&
-            data.posts.posts &&
-            data.posts.posts.map((post, i) => (
-              <Fragment key={post.id + 10000}>
-                {/* add 10000 to avoid the same key warning */}
-                {/* PostTile is a block that contains the information of each
+        {data.posts &&
+          data.posts.posts &&
+          data.posts.posts.map((post, i) => (
+            <Fragment key={post.id + 10000}>
+              {/* add 10000 to avoid the same key warning */}
+              {/* PostTile is a block that contains the information of each
                 individual post */}
-                <PostTile
-                  title={post.title}
-                  id={post.id}
-                  user={post.user}
-                  url={post.url}
-                  comments={post.comments}
-                  upvotes={post.upvotes}
+              <PostTile
+                title={post.title}
+                id={post.id}
+                user={post.user}
+                url={post.url}
+                comments={post.comments}
+                score={post.score}
+                time={post.time}
+              />
+              {/* 19 should be the last element of the first page of posts*/}
+              {i % 19 === 0 && i != 0 && data.posts.hasMore && (
+                <Waypoint
+                  onEnter={() =>
+                    fetchMore({
+                      variables: {
+                        after: data.posts.cursor,
+                      },
+                      updateQuery: (prev, { fetchMoreResult }) => {
+                        if (!fetchMoreResult) return prev;
+                        return {
+                          ...fetchMoreResult,
+                          posts: {
+                            ...fetchMoreResult.posts,
+                            posts: [
+                              ...prev.posts.posts,
+                              ...fetchMoreResult.posts.posts,
+                            ],
+                          },
+                        };
+                      },
+                    })
+                  }
                 />
-                {/* 19 should be the last element of the first page of posts*/}
-                {i % 19 === 0 && i != 0 && data.posts.hasMore && (
-                  <Waypoint
-                    onEnter={() =>
-                      fetchMore({
-                        variables: {
-                          after: data.posts.cursor,
-                        },
-                        updateQuery: (prev, { fetchMoreResult }) => {
-                          if (!fetchMoreResult) return prev;
-                          return {
-                            ...fetchMoreResult,
-                            posts: {
-                              ...fetchMoreResult.posts,
-                              posts: [
-                                ...prev.posts.posts,
-                                ...fetchMoreResult.posts.posts,
-                              ],
-                            },
-                          };
-                        },
-                      })
-                    }
-                  />
-                )}
-              </Fragment>
-            ))}
-        </div>
+              )}
+            </Fragment>
+          ))}
 
         {/* adding loading indicator for when the next page is loading */}
         <Container className={classes.smallLoaderLoop}>
