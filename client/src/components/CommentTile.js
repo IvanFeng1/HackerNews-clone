@@ -30,7 +30,7 @@ function CommentTile({ text, user, id }) {
           style={{ color: "#dedede", textDecoration: "none" }}
         />
       </Grid>
-      <Divider variant="middle" className={classes.divider} />
+      <Divider variant="middle" />
     </Fragment>
   );
 }

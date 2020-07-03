@@ -27,6 +27,7 @@ module.exports = {
       const score = response.score;
       const by = response.by;
       const url = response.url;
+      const text = response.text;
       const topComments = response.comments;
       // const topComments = await dataSources.hackerAPI.getTopStories();
       // we want these in reverse chronological order
@@ -40,6 +41,7 @@ module.exports = {
         score,
         by,
         url,
+        text,
         comments,
         cursor: comments.length ? comments[comments.length - 1].cursor : null,
         // if the cursor at the end of the paginated results is the same as the

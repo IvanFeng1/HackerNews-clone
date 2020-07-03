@@ -17,6 +17,7 @@ const typeDefs = gql`
     url: String
     cursor: Int!
     hasMore: Boolean!
+    text: String
     comments: [Comment]!
   }
   type Post {

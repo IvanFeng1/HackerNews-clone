@@ -86,14 +86,14 @@ function PostTile({ title, id, user, url, comments, score, time }) {
             {isMins ? (
               <Typography variant="subtitle2" className={classes.postInfo}>
                 by {user} {timeDiff} mintes ago | {"  "}
-                <Redirect to={`/items/${id}`} className={classes.postInfoLinks}>
+                <Redirect to={`/item/${id}`} className={classes.postInfoLinks}>
                   {comments} comments
                 </Redirect>
               </Typography>
             ) : (
               <Typography variant="subtitle2" className={classes.postInfo}>
                 by {user} {timeDiff} hours ago | {"  "}
-                <Redirect to={`/items/${id}`} className={classes.postInfoLinks}>
+                <Redirect to={`/item/${id}`} className={classes.postInfoLinks}>
                   {comments} comments
                 </Redirect>
               </Typography>
@@ -112,7 +112,7 @@ function PostTile({ title, id, user, url, comments, score, time }) {
           </Box>
           <Box m={1.3}>
             <Redirect
-              to={`/items/${id}`}
+              to={`/item/${id}`}
               className={classes.noLinkPostInfoLinks}
             >
               <Typography variant="subtitle1" className={classes.title}>
@@ -122,14 +122,14 @@ function PostTile({ title, id, user, url, comments, score, time }) {
             {isMins ? (
               <Typography variant="subtitle2" className={classes.postInfo}>
                 by {user} {timeDiff} mintes ago | {"  "}
-                <Redirect to={`/items/${id}`} className={classes.postInfoLinks}>
+                <Redirect to={`/item/${id}`} className={classes.postInfoLinks}>
                   {comments} comments
                 </Redirect>
               </Typography>
             ) : (
               <Typography variant="subtitle2" className={classes.postInfo}>
                 by {user} {timeDiff} hours ago | {"  "}
-                <Redirect to={`/items/${id}`} className={classes.postInfoLinks}>
+                <Redirect to={`/item/${id}`} className={classes.postInfoLinks}>
                   {comments} comments
                 </Redirect>
               </Typography>

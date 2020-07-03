@@ -25,6 +25,7 @@ const get_comments = gql`
       title
       score
       by
+      text
       url
       cursor
       hasMore
@@ -47,9 +48,6 @@ const useStyles = makeStyles({
 
   underline: {
     color: "#a3add4",
-  },
-  sub: {
-    color: "#dedede",
   },
   comments: {
     minWidth: 150,
@@ -94,9 +92,17 @@ function Commentpage(props) {
             <Link href={data.comments.url} className={classes.underline}>
               <Typography variant="h6">{data.comments.title}</Typography>
             </Link>
-            <Typography variant="subtitle2" className={classes.sub}>
+            <Typography variant="subtitle2" style={{ color: "#a6a6a6" }}>
               {data.comments.score} points | by {data.comments.by}
             </Typography>
+            {data.comments.text && (
+              <Typography variant="subtitle2">
+                <div
+                  dangerouslySetInnerHTML={{ __html: data.comments.text }}
+                  style={{ color: "#a3add4", textDecoration: "none" }}
+                />
+              </Typography>
+            )}
           </Grid>
         )}
 

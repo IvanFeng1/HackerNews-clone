@@ -75,11 +75,15 @@ class HackerAPI extends RESTDataSource {
       }
     }
 
+    if (response.text) {
+      var postText = this.commentTextFormatter(response.text);
+    }
     return {
       title: response.title,
       score: response.score,
       by: response.by,
       url: response.url,
+      text: postText,
       comments: commentArray,
     };
   }
