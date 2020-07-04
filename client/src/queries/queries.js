@@ -37,19 +37,3 @@ export const get_direct_comments = gql`
     }
   }
 `;
-
-export const get_subcomments = gql`
-  query subcommentList($id: Int!, $after: Int) {
-    comments(id: $id, after: $after) {
-      by
-      text
-      cursor
-      hasMore
-      comments {
-        text
-        id
-        user
-      }
-    }
-  }
-`;

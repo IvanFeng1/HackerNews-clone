@@ -30,7 +30,6 @@ function CommentTile({ text, user, id }) {
           style={{ color: "#dedede", textDecoration: "none" }}
         />
       </Grid>
-      <Subcomments id={id} />
       <Divider variant="middle" />
     </Fragment>
   );

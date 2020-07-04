@@ -103,39 +103,41 @@ function Commentpage(props) {
           )}
           {data.comments &&
             data.comments.comments &&
-            data.comments.comments.map((comment, i) => (
+            data.comments.comments.map((comment) => (
               <Fragment>
                 <CommentTile
                   text={comment.text}
                   user={comment.user}
                   id={comment.id}
                 />
-                {i % 19 == 0 && i != 0 && data.comments.hasMore && (
-                  <Waypoint
-                    onEnter={() =>
-                      fetchMore({
-                        variables: {
-                          after: data.comments.cursor,
-                        },
-                        updateQuery: (prev, { fetchMoreResult }) => {
-                          if (!fetchMoreResult) return prev;
-                          return {
-                            ...fetchMoreResult,
-                            comments: {
-                              ...fetchMoreResult.comments,
-                              comments: [
-                                ...prev.comments.comments,
-                                ...fetchMoreResult.comments.comments,
-                              ],
-                            },
-                          };
-                        },
-                      })
-                    }
-                  />
-                )}
               </Fragment>
             ))}
+          {data.comments.hasMore && (
+            <Button // Button that loads more comments when user reaches the bottom of comments
+              onClick={() =>
+                fetchMore({
+                  variables: {
+                    after: data.comments.cursor,
+                  },
+                  updateQuery: (prev, { fetchMoreResult }) => {
+                    if (!fetchMoreResult) return prev;
+                    return {
+                      ...fetchMoreResult,
+                      comments: {
+                        ...fetchMoreResult.comments,
+                        comments: [
+                          ...prev.comments.comments,
+                          ...fetchMoreResult.comments.comments,
+                        ],
+                      },
+                    };
+                  },
+                })
+              }
+            >
+              123414353245
+            </Button>
+          )}
         </Grid>
 
         <Container>{networkStatus === 3 && <CircularProgress />}</Container>
