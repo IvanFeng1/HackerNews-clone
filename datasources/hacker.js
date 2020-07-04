@@ -55,12 +55,13 @@ class HackerAPI extends RESTDataSource {
     */
     const response = await this.get(`item/${id}.json`); // raw response of the post
     var childComments = response.kids; // array of IDs that correspond to the child comments of this post
+    var commentLeng = childComments ? childComments.length : 0;
     var commentResponse; // raw response of comment
     var user; // user that write comment
     var text; // text content of the comment
     var id; // id of the comment
     var commentArray = []; // list of direct comments to this post
-    for (var i = 0; i < childComments.length; i++) {
+    for (var i = 0; i < commentLeng; i++) {
       commentResponse = await this.get(`item/${childComments[i]}.json`);
       if (commentResponse.deleted) {
       } else {
@@ -75,7 +76,7 @@ class HackerAPI extends RESTDataSource {
       }
     }
 
-    if (response.text) {
+    if (response.text && response.type.localeCompare("story") == 0) {
       var postText = this.commentTextFormatter(response.text);
     }
     return {

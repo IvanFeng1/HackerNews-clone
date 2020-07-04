@@ -1,7 +1,6 @@
 import React, { Fragment } from "react";
 import { Waypoint } from "react-waypoint"; // need this for infinite scrolling
 import { useQuery } from "@apollo/react-hooks";
-import gql from "graphql-tag";
 import { Helmet } from "react-helmet"; // need this to set background color
 
 // makeStyles for styling components, CssBaseline because it makes site look nice
@@ -17,25 +16,7 @@ import {
 import PostTile from "../components/PostTile.js";
 import Header from "../components/Header.js";
 import Loading from "../components/Loading.js";
-const get_top_posts = gql`
-  query postList($after: Int) {
-    posts(after: $after) {
-      cursor
-      hasMore
-      posts {
-        title
-        id
-        user
-        url
-        score
-        comments
-        time
-        cursor
-      }
-    }
-  }
-`;
-
+import { get_top_posts } from "../queries/queries.js";
 const useStyles = makeStyles({
   smallLoaderLoop: {
     display: "flex",

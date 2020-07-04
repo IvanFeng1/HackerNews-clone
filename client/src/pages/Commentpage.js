@@ -13,30 +13,11 @@ import {
   CircularProgress,
 } from "@material-ui/core";
 import { useQuery } from "@apollo/react-hooks";
-import gql from "graphql-tag";
-
+import { get_direct_comments } from "../queries/queries.js";
 // components
 import Header from "../components/Header.js";
 import Loading from "../components/Loading.js";
 import CommentTile from "../components/CommentTile.js";
-const get_comments = gql`
-  query commentList($id: Int!, $after: Int) {
-    comments(id: $id, after: $after) {
-      title
-      score
-      by
-      text
-      url
-      cursor
-      hasMore
-      comments {
-        text
-        id
-        user
-      }
-    }
-  }
-`;
 
 const useStyles = makeStyles({
   root: {
@@ -63,9 +44,8 @@ const useStyles = makeStyles({
 function Commentpage(props) {
   const classes = useStyles();
   const itemID = props.match.params.id; // id of the current thread
-  // works only for hardcoded id
   const { loading, error, data, networkStatus, fetchMore } = useQuery(
-    get_comments,
+    get_direct_comments,
     {
       variables: {
         id: parseInt(itemID), // parseInt makes query work
@@ -158,9 +138,7 @@ function Commentpage(props) {
             ))}
         </Grid>
 
-        <Container className={classes.smallLoaderLoop}>
-          {networkStatus === 3 && <CircularProgress />}
-        </Container>
+        <Container>{networkStatus === 3 && <CircularProgress />}</Container>
       </Container>
     </div>
   );

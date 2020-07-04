@@ -11,14 +11,14 @@ const typeDefs = gql`
     posts: [Post]!
   }
   type CommentConnection {
-    title: String!
-    score: Int!
+    title: String
+    score: Int
     by: String!
     url: String
-    cursor: Int!
+    cursor: Int
     hasMore: Boolean!
     text: String
-    comments: [Comment]!
+    comments: [Comment]
   }
   type Post {
     title: String!
