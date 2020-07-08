@@ -7,21 +7,27 @@ import {
   Grid,
   Button,
 } from "@material-ui/core";
+import Subcomments from "./Subcomments.js";
 
 const useStyles = makeStyles({
   comments: {
     minWidth: 200,
     padding: "1em",
-    margin: "0em 1em 0em 1em",
   },
 });
 
-function CommentTile({ text, user, id }) {
+function CommentTile({ text, user, id, marginAmount }) {
   const classes = useStyles();
   text = text.replace("a href", 'a  style="color: #dedede" href');
+  const itemID = id;
+  const marginString = marginAmount.toString() + "em";
+  console.log(marginString);
   return (
     <Fragment>
-      <Grid className={classes.comments}>
+      <Grid
+        className={classes.comments}
+        style={{ margin: `0em 1em 0em ${marginString}` }}
+      >
         <Typography variant="subtitle2" style={{ color: "#a6a6a6" }}>
           {user}
         </Typography>
@@ -31,6 +37,7 @@ function CommentTile({ text, user, id }) {
         />
       </Grid>
       <Divider variant="middle" />
+      <Subcomments id={itemID} currentMargin={marginAmount} />
     </Fragment>
   );
 }
