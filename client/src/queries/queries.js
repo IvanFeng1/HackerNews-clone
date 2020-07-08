@@ -33,6 +33,20 @@ export const get_direct_comments = gql`
         text
         id
         user
+        childComments
+      }
+    }
+  }
+`;
+
+export const get_sub_comments = gql`
+  query subcommentList($id: Int!) {
+    subcomments(id: $id) {
+      childComments {
+        text
+        id
+        user
+        childComments
       }
     }
   }

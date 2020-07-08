@@ -29,8 +29,6 @@ module.exports = {
       const url = response.url;
       const text = response.text;
       const topComments = response.comments;
-      // const topComments = await dataSources.hackerAPI.getTopStories();
-      // we want these in reverse chronological order
       const comments = paginateResults({
         after,
         pageSize,
@@ -50,6 +48,13 @@ module.exports = {
           ? comments[comments.length - 1].cursor !==
             topComments[topComments.length - 1].cursor
           : false,
+      };
+    },
+    subcomments: async (_, { id }, { dataSources }) => {
+      const response = await dataSources.hackerAPI.getSubcomments(id);
+      var childComments = response;
+      return {
+        childComments,
       };
     },
   },

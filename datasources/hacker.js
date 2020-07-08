@@ -70,13 +70,13 @@ class HackerAPI extends RESTDataSource {
           user: commentResponse.by,
           id: commentResponse.id,
           cursor: i,
-          time: commentResponse.time,
           childComments: commentResponse.kids, // child comments that correspond to this comment
         });
       }
     }
 
     if (response.text && response.type.localeCompare("story") == 0) {
+      // if statement if the post contains text
       var postText = this.commentTextFormatter(response.text);
     }
     return {
@@ -87,6 +87,26 @@ class HackerAPI extends RESTDataSource {
       text: postText,
       comments: commentArray,
     };
+  }
+  async getSubcomments(id) {
+    const response = await this.get(`item/${id}.json`); // raw response of the post
+    var childComments = response.kids; // array of IDs that correspond to the child comments of this post
+    var commentLeng = childComments ? childComments.length : 0;
+    var commentArray = []; // list of direct comments to this post
+    var commentResponse; // raw response of comment
+    for (var i = 0; i < commentLeng; i++) {
+      commentResponse = await this.get(`item/${childComments[i]}.json`);
+      if (commentResponse.deleted) {
+      } else {
+        commentArray.push({
+          text: this.commentTextFormatter(commentResponse.text),
+          user: commentResponse.by,
+          id: commentResponse.id,
+          childComments: commentResponse.kids, // child comments that correspond to this comment
+        });
+      }
+    }
+    return commentArray;
   }
 }
 

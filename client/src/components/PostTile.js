@@ -64,7 +64,6 @@ function PostTile({ title, id, user, url, comments, score, time }) {
     timeDiff = Math.floor(secDiff / 3600);
     isMins = false;
   }
-  console.log(id);
   return (
     <Card className={classes.root}>
       {hasUrl ? (
@@ -85,7 +84,7 @@ function PostTile({ title, id, user, url, comments, score, time }) {
             </Link>
             {isMins ? (
               <Typography variant="subtitle2" className={classes.postInfo}>
-                by {user} {timeDiff} mintes ago | {"  "}
+                by {user} {timeDiff} minutes ago | {"  "}
                 <Redirect to={`/item/${id}`} className={classes.postInfoLinks}>
                   {comments} comments
                 </Redirect>
@@ -93,7 +92,14 @@ function PostTile({ title, id, user, url, comments, score, time }) {
             ) : (
               <Typography variant="subtitle2" className={classes.postInfo}>
                 by {user} {timeDiff} hours ago | {"  "}
-                <Redirect to={`/item/${id}`} className={classes.postInfoLinks}>
+                {console.log(`${title} ${comments}`)}
+                <Redirect
+                  to={{
+                    pathname: `/item/${id}`,
+                    state: { commentNum: comments },
+                  }}
+                  className={classes.postInfoLinks}
+                >
                   {comments} comments
                 </Redirect>
               </Typography>
@@ -121,7 +127,7 @@ function PostTile({ title, id, user, url, comments, score, time }) {
             </Redirect>
             {isMins ? (
               <Typography variant="subtitle2" className={classes.postInfo}>
-                by {user} {timeDiff} mintes ago | {"  "}
+                by {user} {timeDiff} minutes ago | {"  "}
                 <Redirect to={`/item/${id}`} className={classes.postInfoLinks}>
                   {comments} comments
                 </Redirect>

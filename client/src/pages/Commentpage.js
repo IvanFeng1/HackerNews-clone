@@ -11,6 +11,7 @@ import {
   Grid,
   Divider,
   CircularProgress,
+  Box,
 } from "@material-ui/core";
 import { useQuery } from "@apollo/react-hooks";
 import { get_direct_comments } from "../queries/queries.js";
@@ -44,6 +45,7 @@ const useStyles = makeStyles({
 function Commentpage(props) {
   const classes = useStyles();
   const itemID = props.match.params.id; // id of the current thread
+  const commentNum = props.location.state.commentNum;
   const { loading, error, data, networkStatus, fetchMore } = useQuery(
     get_direct_comments,
     {
@@ -95,7 +97,7 @@ function Commentpage(props) {
                   align="left"
                   style={{ color: "#dedede" }}
                 >
-                  {data.comments.comments.length} comments{" "}
+                  {commentNum} comments{" "}
                 </Typography>
               </Grid>
               <Divider variant="middle" />
@@ -109,38 +111,43 @@ function Commentpage(props) {
                   text={comment.text}
                   user={comment.user}
                   id={comment.id}
+                  marginAmount={1}
                 />
               </Fragment>
             ))}
           {data.comments.hasMore && (
-            <Button // Button that loads more comments when user reaches the bottom of comments
-              onClick={() =>
-                fetchMore({
-                  variables: {
-                    after: data.comments.cursor,
-                  },
-                  updateQuery: (prev, { fetchMoreResult }) => {
-                    if (!fetchMoreResult) return prev;
-                    return {
-                      ...fetchMoreResult,
-                      comments: {
-                        ...fetchMoreResult.comments,
-                        comments: [
-                          ...prev.comments.comments,
-                          ...fetchMoreResult.comments.comments,
-                        ],
-                      },
-                    };
-                  },
-                })
-              }
-            >
-              123414353245
-            </Button>
+            <Box flexDirection="row">
+              <Button // Button that loads more comments when user reaches the bottom of comments
+                variant="contained"
+                onClick={() =>
+                  fetchMore({
+                    variables: {
+                      after: data.comments.cursor,
+                    },
+                    updateQuery: (prev, { fetchMoreResult }) => {
+                      if (!fetchMoreResult) return prev;
+                      return {
+                        ...fetchMoreResult,
+                        comments: {
+                          ...fetchMoreResult.comments,
+                          comments: [
+                            ...prev.comments.comments,
+                            ...fetchMoreResult.comments.comments,
+                          ],
+                        },
+                      };
+                    },
+                  })
+                }
+              >
+                More Comments
+              </Button>
+              <Container>
+                {networkStatus === 3 && <CircularProgress />}
+              </Container>
+            </Box>
           )}
         </Grid>
-
-        <Container>{networkStatus === 3 && <CircularProgress />}</Container>
       </Container>
     </div>
   );

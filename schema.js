@@ -4,6 +4,7 @@ const typeDefs = gql`
   type Query {
     posts(pageSize: Int, after: Int): PostConnection!
     comments(id: Int, pageSize: Int, after: Int): CommentConnection!
+    subcomments(id: Int): Subcomment
   }
   type PostConnection {
     cursor: Int! # time the post was uploaded
@@ -35,9 +36,12 @@ const typeDefs = gql`
     text: String!
     user: String!
     id: Int!
-    cursor: Int!
-    time: Int!
+    cursor: Int
     childComments: [Int]
+  }
+
+  type Subcomment {
+    childComments: [Comment]
   }
 `;
 

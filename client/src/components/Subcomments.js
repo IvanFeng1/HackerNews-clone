@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 
 import { get_sub_comments } from "../queries/queries.js";
 import { useQuery } from "@apollo/react-hooks";
+import { CircularProgress } from "@material-ui/core";
 import CommentTile from "./CommentTile.js";
 import Loading from "./Loading.js";
 function Subcomments({ id, currentMargin }) {
@@ -12,7 +13,7 @@ function Subcomments({ id, currentMargin }) {
     },
     notifyOnNetworkStatusChange: true,
   });
-  if (loading && networkStatus != 3) return <Loading />;
+  if (loading && networkStatus != 3) return <CircularProgress />;
   if (error) return <p>ERROR</p>;
   if (!data) return <p>Not found</p>;
 
