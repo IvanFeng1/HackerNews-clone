@@ -9,7 +9,7 @@ import gql from "graphql-tag";
 
 const cache = new InMemoryCache();
 const link = new HttpLink({
-  uri: "http://localhost:4000/graphql",
+  uri: "/graphql",
 });
 
 const client = new ApolloClient({

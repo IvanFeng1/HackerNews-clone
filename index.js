@@ -6,6 +6,7 @@ require("dotenv").config();
 const express = require("express");
 const { ApolloServer, gql } = require("apollo-server-express");
 
+const path = require("path");
 const server = new ApolloServer({
   typeDefs,
   resolvers,
@@ -27,15 +28,11 @@ const server = new ApolloServer({
 const app = express();
 server.applyMiddleware({ app });
 
-if (process.env.NODE_ENV === "production") {
-  // Serve any static files
-  app.use(express.static(path.join(__dirname, "client/build")));
+app.use(express.static("public"));
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "public", "index.html"));
+});
 
-  // Handle React routing, return all requests to React app
-  app.get("*", function (req, res) {
-    res.sendFile(path.join(__dirname, "client/build", "index.html"));
-  });
-}
 app.listen({ port: process.env.PORT || 4000 }, () =>
   console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
 );
