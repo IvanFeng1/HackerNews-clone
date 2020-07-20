@@ -78,6 +78,7 @@ function Commentpage(props) {
                   {data.comments.title}{" "}
                   <a style={{ fontSize: 12 }}> {baseURL}</a>
                 </Typography>
+                <div>{console.log("baseurl test")}</div>
               </Link>
             ) : (
               <Link href={data.comments.url} className={classes.underline}>
