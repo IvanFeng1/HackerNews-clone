@@ -1,12 +1,5 @@
 import React, { Fragment } from "react";
-import {
-  Card,
-  makeStyles,
-  Typography,
-  Divider,
-  Grid,
-  Button,
-} from "@material-ui/core";
+import { makeStyles, Typography, Divider, Grid } from "@material-ui/core";
 import Subcomments from "./Subcomments.js";
 
 const useStyles = makeStyles({
@@ -21,7 +14,6 @@ function CommentTile({ text, user, id, marginAmount }) {
   text = text.replace("a href", 'a  style="color: #dedede" href');
   const itemID = id;
   const marginString = marginAmount.toString() + "em";
-  console.log(marginString);
   return (
     <Fragment>
       <Grid
