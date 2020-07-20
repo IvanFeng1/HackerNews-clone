@@ -17,4 +17,4 @@ Comments page
 
 
 ## Deployment
-Currently deployed at https://hackernews-clone-x3.herokuapp.com/ as of July 20, 2020
+Deployed at https://hackernews-clone-x3.herokuapp.com/ as of July 20, 2020
