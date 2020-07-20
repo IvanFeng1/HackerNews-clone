@@ -85,18 +85,23 @@ function PostTile({ title, id, user, url, comments, score, time }) {
             {isMins ? (
               <Typography variant="subtitle2" className={classes.postInfo}>
                 by {user} {timeDiff} minutes ago | {"  "}
-                <Redirect to={`/item/${id}`} className={classes.postInfoLinks}>
+                <Redirect
+                  to={{
+                    pathname: `/item/${id}`,
+                    state: { commentNum: comments, baseURL: baseURL },
+                  }}
+                  className={classes.postInfoLinks}
+                >
                   {comments} comments
                 </Redirect>
               </Typography>
             ) : (
               <Typography variant="subtitle2" className={classes.postInfo}>
                 by {user} {timeDiff} hours ago | {"  "}
-                {console.log(`${title} ${comments}`)}
                 <Redirect
                   to={{
                     pathname: `/item/${id}`,
-                    state: { commentNum: comments },
+                    state: { commentNum: comments, baseURL: baseURL },
                   }}
                   className={classes.postInfoLinks}
                 >
@@ -118,7 +123,10 @@ function PostTile({ title, id, user, url, comments, score, time }) {
           </Box>
           <Box m={1.3}>
             <Redirect
-              to={`/item/${id}`}
+              to={{
+                pathname: `/item/${id}`,
+                state: { commentNum: comments },
+              }}
               className={classes.noLinkPostInfoLinks}
             >
               <Typography variant="subtitle1" className={classes.title}>
@@ -128,14 +136,26 @@ function PostTile({ title, id, user, url, comments, score, time }) {
             {isMins ? (
               <Typography variant="subtitle2" className={classes.postInfo}>
                 by {user} {timeDiff} minutes ago | {"  "}
-                <Redirect to={`/item/${id}`} className={classes.postInfoLinks}>
+                <Redirect
+                  to={{
+                    pathname: `/item/${id}`,
+                    state: { commentNum: comments },
+                  }}
+                  className={classes.postInfoLinks}
+                >
                   {comments} comments
                 </Redirect>
               </Typography>
             ) : (
               <Typography variant="subtitle2" className={classes.postInfo}>
                 by {user} {timeDiff} hours ago | {"  "}
-                <Redirect to={`/item/${id}`} className={classes.postInfoLinks}>
+                <Redirect
+                  to={{
+                    pathname: `/item/${id}`,
+                    state: { commentNum: comments },
+                  }}
+                  className={classes.postInfoLinks}
+                >
                   {comments} comments
                 </Redirect>
               </Typography>

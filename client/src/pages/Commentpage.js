@@ -46,6 +46,7 @@ function Commentpage(props) {
   const classes = useStyles();
   const itemID = props.match.params.id; // id of the current thread
   const commentNum = props.location.state.commentNum;
+  const baseURL = props.location.state.baseURL;
   const { loading, error, data, networkStatus, fetchMore } = useQuery(
     get_direct_comments,
     {
@@ -71,9 +72,18 @@ function Commentpage(props) {
       <Container width="md">
         {data.comments && data.comments.comments && (
           <Grid className={classes.root}>
-            <Link href={data.comments.url} className={classes.underline}>
-              <Typography variant="h6">{data.comments.title}</Typography>
-            </Link>
+            {baseURL ? (
+              <Link href={data.comments.url} className={classes.underline}>
+                <Typography variant="h6">
+                  {data.comments.title}{" "}
+                  <a style={{ fontSize: 12 }}> {baseURL}</a>
+                </Typography>
+              </Link>
+            ) : (
+              <Link href={data.comments.url} className={classes.underline}>
+                <Typography variant="h6">{data.comments.title} </Typography>
+              </Link>
+            )}
             <Typography variant="subtitle2" style={{ color: "#a6a6a6" }}>
               {data.comments.score} points | by {data.comments.by}
             </Typography>
