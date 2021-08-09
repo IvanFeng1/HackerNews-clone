@@ -1,5 +1,5 @@
 # HackerNews-clone
-Web application made to clone the Hacker News website, built with ReactJS, Apollo Client, Material-UI, and Express.
+
 Design inspired by https://github.com/vuejs/vue-hackernews-2.0
 
 ## Project screenshots
