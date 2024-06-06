@@ -16,5 +16,4 @@ Comments page
 ![](images/commentpage.PNG)
 
 
-## Deployment
-Deployed at https://hackernews-clone-x3.herokuapp.com/ as of July 20, 2020
+
